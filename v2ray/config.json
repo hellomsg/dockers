@@ -1,0 +1,112 @@
+{
+  "routing" : {
+    "name" : "all_to_main",
+    "domainStrategy" : "AsIs",
+    "rules" : [
+      {
+        "type" : "field",
+        "outboundTag" : "***",
+        "port" : "0-65535"
+      }
+    ]
+  },
+  "inbounds" : [
+    {
+      "listen" : "0.0.0.0",
+      "protocol" : "http",
+      "settings" : {
+        "timeout" : 0
+      },
+      "tag" : "httpinbound",
+      "port" : "env:V2RAY_HTTP_PORT"
+    }
+  ],
+  "dns" : {
+    "servers" : [
+      "localhost"
+    ]
+  },
+  "log" : {
+    "error" : "\/var\/folders\/40\/nv42vf995h7c79319nn7sbtm0000gn\/T\/cenmrev.v2rayx.log\/error.log",
+    "loglevel" : "none",
+    "access" : "\/var\/folders\/40\/nv42vf995h7c79319nn7sbtm0000gn\/T\/cenmrev.v2rayx.log\/access.log"
+  },
+  "outbounds" : [
+    {
+      "sendThrough" : "0.0.0.0",
+      "mux" : {
+        "enabled" : false,
+        "concurrency" : 8
+      },
+      "protocol" : "vmess",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "***",
+            "users" : [
+              {
+                "id" : "***",
+                "alterId" : 8,
+                "security" : "auto",
+                "level" : 0
+              }
+            ],
+            "port" : 61328
+          }
+        ]
+      },
+      "tag" : "***",
+      "streamSettings" : {
+        "sockopt" : {
+
+        },
+        "quicSettings" : {
+          "key" : "",
+          "header" : {
+            "type" : "none"
+          },
+          "security" : "none"
+        },
+        "tlsSettings" : {
+          "allowInsecure" : false,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "serverName" : "server.cc",
+          "allowInsecureCiphers" : false
+        },
+        "wsSettings" : {
+          "path" : "",
+          "headers" : {
+
+          }
+        },
+        "httpSettings" : {
+          "path" : "",
+          "host" : [
+            ""
+          ]
+        },
+        "tcpSettings" : {
+          "header" : {
+            "type" : "none"
+          }
+        },
+        "kcpSettings" : {
+          "header" : {
+            "type" : "none"
+          },
+          "mtu" : 1350,
+          "congestion" : false,
+          "tti" : 20,
+          "uplinkCapacity" : 5,
+          "writeBufferSize" : 1,
+          "readBufferSize" : 1,
+          "downlinkCapacity" : 20
+        },
+        "security" : "none",
+        "network" : "tcp"
+      }
+    }
+  ]
+}
